@@ -6,7 +6,7 @@ metadata:
   name: mongodb-secret
 type: Opaque
 data:
-  mongodb-root-username: YWRtaW4=  # admin
+  mongodb-root-username: YWRtaW4=      # admin
   mongodb-root-password: bW9uZ29wYXNzMTIz  # mongopass123
 ---
 # 2. MongoDB Deployment
@@ -27,23 +27,23 @@ spec:
         app: mongodb
     spec:
       containers:
-      - name: mongodb
-        image: mongo:6.0
-        ports:
-        - containerPort: 27017
-        env:
-        - name: MONGO_INITDB_ROOT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-secret
-              key: mongodb-root-username
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-secret
-              key: mongodb-root-password
-        - name: MONGO_INITDB_DATABASE
-          value: "events_db"
+        - name: mongodb
+          image: mongo:6.0
+          ports:
+            - containerPort: 27017
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongodb-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongodb-root-password
+            - name: MONGO_INITDB_DATABASE
+              value: "events_db"
 ---
 # 3. MongoDB Service
 apiVersion: v1
@@ -76,16 +76,16 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend
-        image: event-backend:v1
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8000
-        env:
-        - name: MONGO_URI
-          value: "mongodb://admin:mongopass123@mongodb-service:27017"
-        - name: DB_NAME
-          value: "events_db"
+        - name: backend
+          image: event-backend:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://admin:mongopass123@mongodb-service:27017"
+            - name: DB_NAME
+              value: "events_db"
 ---
 # 5. Backend Service
 apiVersion: v1
@@ -118,14 +118,14 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend
-        image: event-frontend:v1
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8501
-        env:
-        - name: BACKEND_URL
-          value: "http://backend-service:8000"
+        - name: frontend
+          image: event-frontend:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8501
+          env:
+            - name: BACKEND_URL
+              value: "http://backend-service:8000"
 ---
 # 7. Frontend Service
 apiVersion: v1
