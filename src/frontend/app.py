@@ -611,4 +611,4 @@ elif menu == "⚙️ Настройки":
         st.markdown(f"- **{service}:** {status}")
     
     st.markdown("---")
-    st.caption("© 2026 Event Manager Pro. Все права защищены.")
+    st.caption("© 2026 Event Manager Pro. Все права защищены.")# CI/CD демонстрация: автоматическая сборка с версионированием
