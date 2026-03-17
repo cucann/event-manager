@@ -18,9 +18,3 @@
 kubectl apply -f k8s/fullstack.yaml
 kubectl port-forward deployment/frontend-deployment 8501:8501
 ```
-EOF 
-eof
-
-## 🔄 CI/CD Status
-
-![CI/CD Pipeline](https://github.com/cucann/event-manager/actions/workflows/ci.yml/badge.svg)
